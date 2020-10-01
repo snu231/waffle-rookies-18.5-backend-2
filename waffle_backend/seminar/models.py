@@ -9,7 +9,7 @@ class Seminar(models.Model):
 
     joined_at = models.DateTimeField(auto_now=True)
 
-    is_active = models.BooleanField()    #
+    is_active = models.BooleanField(null=True)    #
 
     dropped_at = models.DateTimeField(auto_now=True)
 
@@ -31,7 +31,7 @@ class ParticipantProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE , primary_key =True)
 
     university = models.CharField(max_length=50, null= True)
-    accepted = models.BooleanField()      # bool
+    accepted = models.BooleanField(null= True)      # bool
 
     seminars=models.ForeignKey( Seminar, null=True, related_name= 'participant', on_delete=models.SET_NULL)  # related_name
 
