@@ -30,7 +30,7 @@ class UserSeminar(models.Model):
 class ParticipantProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE , primary_key =True)
 
-    university = models.CharField(max_length=50, db_index=True)
+    university = models.CharField(max_length=50, null= True)
     accepted = models.BooleanField()      # bool
 
     seminars=models.ForeignKey( Seminar, null=True, related_name= 'participant', on_delete=models.SET_NULL)  # related_name
@@ -43,7 +43,7 @@ class InstructorProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
 
-    company = models.CharField(max_length=50, db_index=True)
+    company = models.CharField(max_length=50, null=True)
     year = models.PositiveSmallIntegerField(null=True)   #  null?
 
     charge = models.ForeignKey( Seminar, null=True, related_name='instructor', on_delete=models.SET_NULL)  #  related_name
