@@ -34,7 +34,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
         return None
 
 class InstructorSerializer(serializers.ModelSerializer):
-    # company  = serializers.CharField(required=False)
+    #company = serializers.CharField(null=True)
     charge = serializers.SerializerMethodField()#
     # year = models.PositiveSmallIntegerField(null=True)
     class Meta:

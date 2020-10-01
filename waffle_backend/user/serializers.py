@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
 from seminar.models import ParticipantProfile, InstructorProfile
-from seminar.serializers import SeminarSerializer, ParticipantSerializer, InstructorSerialize
+from seminar.serializers import SeminarSerializer, ParticipantSerializer, InstructorSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):

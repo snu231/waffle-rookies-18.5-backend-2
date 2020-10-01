@@ -9,7 +9,7 @@ class Seminar(models.Model):
 
     joined_at = models.DateTimeField(auto_now=True)
 
-    is_active = models.booleanField()    #
+    is_active = models.BooleanField()    #
 
     dropped_at = models.DateTimeField(auto_now=True)
 
@@ -31,9 +31,9 @@ class ParticipantProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE , primary_key =True)
 
     university = models.CharField(max_length=50, db_index=True)
-    accepted =models.booleanField()      # bool
+    accepted = models.BooleanField()      # bool
 
-    seminars=models.ForeignKey( Seminar, null=True, related_name='seminar', on_delete=models.SET_NULL)  # related_name
+    seminars=models.ForeignKey( Seminar, null=True, related_name= 'participant', on_delete=models.SET_NULL)  # related_name
 
     # rating = models.PositiveSmallIntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,7 +46,7 @@ class InstructorProfile(models.Model):
     company = models.CharField(max_length=50, db_index=True)
     year = models.PositiveSmallIntegerField(null=True)   #  null?
 
-    charge = models.ForeignKey( Seminar, null=True, related_name='seminar', on_delete=models.SET_NULL)  #  related_name
+    charge = models.ForeignKey( Seminar, null=True, related_name='instructor', on_delete=models.SET_NULL)  #  related_name
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
