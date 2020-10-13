@@ -9,6 +9,9 @@ from rest_framework.response import Response
 
 from user.serializers import UserSerializer
 
+from seminar.permissions import IsInstructor, IsParticipant
+
+from seminar.serializers import ParticipantProfileSerializer, InstructorProfileSerializer
 
 class UserViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
@@ -19,6 +22,7 @@ class UserViewSet(viewsets.GenericViewSet):
         if self.action in ('create', 'login'):
             return (AllowAny(), )
         return self.permission_classes
+
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -69,3 +73,19 @@ class UserViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.update(user, serializer.validated_data)
         return Response(serializer.data)
+
+    def participant(self, request):
+        user = request.user
+        data = request.data.copy()
+
+        if hasattr(user, 'participant'):
+            return Response({"error: already participant"}, status=status.HTTP_400_BAD_REQUEST)
+
+        data['user_id'] = user.id
+
+        serializer = ParticipantProfileSerializer(data= data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        user.refresh_from_db()
+        return Response(self.get_serializer(user).data, status=status.HTTP_201_CREATED)
