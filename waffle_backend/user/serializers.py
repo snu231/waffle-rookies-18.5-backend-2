@@ -18,8 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
     participant = serializers.SerializerMethodField()  #
     instructor = serializers.SerializerMethodField()  #
 
-    role = serializers.ChoiceField(write_only=True,allow_blank=True, required=False)
+    university = serializers.CharField(write_only=True,allow_blank=True, required=False)
     accepted = serializers.BooleanField(write_only=True, default=True, required=False)
+
+    role = serializers.ChoiceField(write_only=True, choices = UserSeminar.ROLES)
 
     company = serializers.CharField(write_only=True, allow_blank=True, required=False)
     year = serializers.IntegerField(write_only=True, required=False)
@@ -38,7 +40,6 @@ class UserSerializer(serializers.ModelSerializer):
 
             'participant',   #
             'instructor',  #
-
             'role',
             'university',
             'accepted',

@@ -6,11 +6,12 @@ from django.db import models
 
 class Seminar(models.Model):
     name = models.CharField(max_length=50)
-    capacity = models.PositiveSmallIntegerField()
-    count = models.PositiveSmallIntegerField()
-    time = models.TimeField()
-    online = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    capacity = models.PositiveSmallIntegerField(default = 0)
+    count = models.PositiveSmallIntegerField(default = 0)
+    time = models.TimeField(null= True)
+    online = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
@@ -37,7 +38,7 @@ class UserSeminar(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, db_index=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, db_index=True, default= True)
     is_active = models.BooleanField(null=True) #
     # joined_at = models.DateTimeField(auto_now=True)
     # Seminar.sem.create_seminar()2
