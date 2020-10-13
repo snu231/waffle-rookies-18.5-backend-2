@@ -35,6 +35,24 @@ class GetUserTestCase(TestCase):
 
         )
 
+class PostParticipantTestCase(TestCase):
+    client = Client()
+
+    def setUp(self):
+
+        self.client.post(
+            'api/v1/user/participant/',
+            json.dumps({
+                "user": "swl",
+                "university": "snu",
+                "accepted": 1,
+
+            }),
+
+            context_type = 'application/json'
+        )
+
+
 class PostSeminarTestCase(TestCase):
     client = Client()
 
