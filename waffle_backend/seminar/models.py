@@ -63,7 +63,7 @@ class ParticipantProfile(models.Model):
 
 class InstructorProfile(models.Model):
 
-    user = models.OneToOneField(User, related_name='instructor',on_delete=models.CASCADE, primary_key = True)
+    user = models.OneToOneField(User, related_name='instructor', on_delete=models.CASCADE, primary_key = True)
 
     company = models.CharField(max_length=50, null=True)
     year = models.PositiveSmallIntegerField(null=True)   #  null?
