@@ -41,7 +41,7 @@ class InstructorOfSeminarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserSeminar
-        fileds = (
+        fields = (
             'joined_at',
             'id',
             'username',
@@ -61,7 +61,7 @@ class ParticipantOfSeminarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserSeminar
-        fileds = (
+        fields = (
             'joined_at',
             'id',
             'username',
