@@ -94,7 +94,7 @@ class ParticipantProfileSerializer(serializers.ModelSerializer):
     def get_seminars(self, participant_profile):
 
         participant_seminars = participant_profile.user.user_seminars.filter(role=UserSeminar.PARTICIPANT)
-        return SeminarSerializer(participant_seminars, context=self.context).data
+        return SeminarASParticipantSerializer(participant_seminars, context=self.context).data
 
 
 class InstructorProfileSerializer(serializers.ModelSerializer):
@@ -108,6 +108,7 @@ class InstructorProfileSerializer(serializers.ModelSerializer):
             'company',
             'year',
             'charge',   #
+
         )
     def get_charge(self, instructor_profile):
         instructor_seminar = instructor_profile.user.user_seminars.filter(role=UserSeminar.INSTRUCTOR).last()

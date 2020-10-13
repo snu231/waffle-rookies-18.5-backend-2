@@ -126,7 +126,7 @@ class PostUserTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         data = response.json()
-        self.assertIn("id", data)
+        self.assertIn("id", data )
         self.assertEqual(data["username"], "participant")
         self.assertEqual(data["email"], "bdv111@snu.ac.kr")
         self.assertEqual(data["first_name"], "Davin")
