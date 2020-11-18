@@ -7,6 +7,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from django.core.cache import cache
+
 from seminar.serializers import SeminarSerializer, ParticipantProfileSerializer, InstructorProfileSerializer
 
 from seminar.models import Seminar, ParticipantProfile, InstructorProfile, UserSeminar
@@ -67,13 +69,27 @@ class SeminarViewSet(viewsets.GenericViewSet):
         name = request.query_params.get('name')
         order = request.query_params.get('order')
 
-        seminars = self.get_queryset()
+        cache_key = 'seminar-list'
+        data = cache.get('seminar-list')
 
-        if name:
-            seminars = seminars.filter(name__icontains=name)
-        if order == 'earliest':
-            seminars = seminars.order_by('-created_at')
-        return Response(self.get_serializer(seminars, many=True).data)
+        if data is None:
+
+            print("cache miss")
+            seminars = self.get_queryset()
+            if name:
+                seminars = seminars.filter(name__icontains=name)
+            if order == 'earliest':
+                seminars = seminars.order_by('created_at')
+            else:
+                seminars = seminars.order_by('-created_at')
+
+            data = self.get_serializer(seminars, many=True).data
+            cache.set(cache_key, data, timeout=600)
+
+        else:
+            print("cache hit")
+
+        return Response(data)
 
     def user(self, request, pk):
         seminar = self.get_object()
